@@ -1,122 +1,214 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // Asegúrate de que TOOLS_DATA exista y tenga el formato esperado
-    if (typeof window.TOOLS_DATA === 'undefined' || !window.TOOLS_DATA.sections) {
-        console.error('Los datos de herramientas no están disponibles o tienen un formato incorrecto.');
-        return;
-    }
+  // 1) Validar datos
+  if (!window.TOOLS_DATA || !Array.isArray(window.TOOLS_DATA.sections)) {
+    console.error('TOOLS_DATA no disponible o con formato incorrecto');
+    return;
+  }
 
-    const allProducts = flattenProducts(window.TOOLS_DATA);
-    const productsGrid = document.getElementById('productsGrid');
-    const productsContainer = document.getElementById('productsContainer');
-    const productCountSpan = document.querySelector('#productCount .fw-semibold');
-    const loadingState = document.querySelector('.loading-state');
-    const emptyState = document.querySelector('.empty-state');
-
-    function flattenProducts(data) {
-        let products = [];
-        if (data && data.sections) {
-            data.sections.forEach(section => {
-                const processProducts = (productList, category, subcategory) => {
-                    if (productList && Array.isArray(productList)) {
-                        productList.forEach(product => {
-                            products.push({
-                                ...product,
-                                category: category,
-                                subcategory: subcategory
-                            });
-                        });
-                    }
-                };
-
-                // Caso 1: sections -> tools -> products
-                if (section.tools && Array.isArray(section.tools)) {
-                    section.tools.forEach(tool => {
-                        processProducts(tool.products, section.category, tool.subcategory);
-                    });
-                }
-
-                // Caso 2: sections -> products
-                processProducts(section.products, section.category, section.category);
-            });
+  // 2) Aplanar todos los productos
+  const allProducts = [];
+  window.TOOLS_DATA.sections.forEach(section => {
+    // caso: section.tools[].products
+    if (Array.isArray(section.tools)) {
+      section.tools.forEach(tool => {
+        if (Array.isArray(tool.products)) {
+          tool.products.forEach(p =>
+            allProducts.push({
+              ...p,
+              category: section.category,
+              subcategory: tool.subcategory
+            })
+          );
         }
-        return products;
+      });
+    }
+    // caso: section.products
+    if (Array.isArray(section.products)) {
+      section.products.forEach(p =>
+        allProducts.push({
+          ...p,
+          category: section.category,
+          subcategory: section.category
+        })
+      );
+    }
+  });
+
+  // 3) Referencias al DOM
+  const searchInput        = document.getElementById('searchInput');
+  const clearSearchBtn     = document.getElementById('clearSearch');
+  const minPriceInput      = document.getElementById('minPrice');
+  const maxPriceInput      = document.getElementById('maxPrice');
+  const sortBySelect       = document.getElementById('sortBy');
+  const clearAllFiltersBtn = document.getElementById('clearAllFilters');
+  const clearCategoriesBtn = document.getElementById('clearCategories');
+  const categoryContainer  = document.getElementById('categoryFilters');
+  const productsGrid       = document.getElementById('productsGrid');
+  const productCountSpan   = document.getElementById('productCount');
+
+  // 4) Helper para truncar texto
+  const truncate = (txt, max) =>
+    txt.length > max ? txt.slice(0, max) + '…' : txt;
+
+  // 5) Renderizar checkboxes de categorías
+  const categories = Array.from(
+    new Set(allProducts.map(p => p.category))
+  ).sort();
+  categories.forEach(cat => {
+    const safeId = 'cat-' + cat.replace(/\s+/g, '-').toLowerCase();
+    categoryContainer.insertAdjacentHTML('beforeend', `
+      <div class="form-check">
+        <input
+          class="form-check-input category-checkbox"
+          type="checkbox"
+          value="${cat}"
+          id="${safeId}"
+        >
+        <label class="form-check-label" for="${safeId}">
+          ${cat}
+        </label>
+      </div>`
+    );
+  });
+
+  // 6) Renderizar productos
+  function renderProducts(list) {
+    productCountSpan.textContent = list.length;
+    productsGrid.innerHTML = '';
+
+    if (!list.length) {
+      productsGrid.innerHTML = `
+        <div class="col">
+          <p class="text-muted">No hay productos.</p>
+        </div>`;
+      return;
     }
 
-    function renderProducts(products) {
-        // Ocultar estado de carga/vacío y mostrar rejilla
-        loadingState.classList.add('d-none');
-        productsGrid.classList.remove('d-none');
-        emptyState.classList.add('d-none');
+    const frag = document.createDocumentFragment();
+    list.forEach(p => {
+      // precio con fallback
+      const priceText = (p.price != null)
+        ? p.price.toFixed(2) + ' USD'
+        : '--';
 
-        productsContainer.innerHTML = ''; // Limpiar contenedor
+      const col = document.createElement('div');
+      col.className = 'col';
+      col.innerHTML = `
+        <div class="card h-100 product-card">
+          <img
+            src="${p.url || '/' + p.image}"
+            onerror="this.src='/assets/images/placeholder-product.png';"
+            class="card-img-top product-image"
+            alt="${p.sku}"
+            loading="lazy"
+          >
+          <div class="card-body d-flex flex-column">
+            <h6 class="card-title fw-bold text-primary mb-2">${p.sku}</h6>
+            <p class="card-text text-muted small mb-2">
+              ${truncate(p.description, 80)}
+            </p>
+            <small class="text-secondary mt-auto">
+              <i class="fas fa-tag me-1"></i>${p.category}
+            </small>
+          </div>
+          <div class="card-footer bg-light border-0 d-flex justify-content-between">
+            <span class="fw-bold text-success">${priceText}</span>
+            <button
+              class="btn btn-primary btn-sm view-details-btn"
+              data-bs-toggle="modal"
+              data-bs-target="#productModal"
+              data-product='${JSON.stringify(p).replace(/'/g,"&apos;")}'
+            >
+              <i class="fas fa-eye me-1"></i>Ver más
+            </button>
+          </div>
+        </div>`;
+      frag.appendChild(col);
+    });
+    productsGrid.appendChild(frag);
+  }
 
-        if (products.length === 0) {
-            // Mostrar estado vacío si no hay productos
-            productsGrid.classList.add('d-none');
-            emptyState.classList.remove('d-none');
-            productCountSpan.textContent = '0';
-            return;
-        }
+  // 7) Filtrar y ordenar
+  function applyFiltersAndSort() {
+    let filtered = allProducts.slice();
 
-        productCountSpan.textContent = products.length;
-
-        products.forEach(product => {
-            // Truncar descripción larga
-            const maxLength = 80;
-            const truncatedDescription = product.description.length > maxLength 
-                ? product.description.substring(0, maxLength) + '...' 
-                : product.description;
-
-            // Usar URL de imagen si está disponible, sino usar imagen local
-            const imageUrl = product.url || `/${product.image}`;
-
-            const productCard = `
-                <div>
-                    <div class="product-card">
-                        <div class="product-image-container">
-                            <img src="${imageUrl}" 
-                                 class="product-image"
-                                 alt="${product.description}"
-                                 loading="lazy"
-                                 onerror="this.src='/assets/images/placeholder-product.jpg'; this.onerror=null;">
-                        </div>
-                        <div class="card-body">
-                            <h6 class="card-title fw-bold text-primary mb-2">${product.name}</h6>
-                            <p class="card-text text-muted small">${truncatedDescription}</p>
-                            <div class="product-category">
-                                <small class="text-secondary">
-                                    <i class="fas fa-tag me-1"></i>${product.category}
-                                </small>
-                            </div>
-                        </div>
-                        <div class="card-footer bg-light border-0 d-flex justify-content-between align-items-center">
-                            <span class="product-price fw-bold text-success">${product.price.toFixed(2)} USD</span>
-                            <button class="btn btn-primary btn-sm view-details-btn" 
-                                    data-bs-toggle="modal" 
-                                    data-bs-target="#productModal"
-                                    data-product='${JSON.stringify(product).replace(/'/g, "&apos;")}'>
-                                <i class="fas fa-eye me-1"></i>Ver más
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            `;
-            productsContainer.innerHTML += productCard;
-        });
+    // a) búsqueda
+    const term = searchInput.value.trim().toLowerCase();
+    if (term) {
+      filtered = filtered.filter(p =>
+        p.sku.toLowerCase().includes(term) ||
+        p.description.toLowerCase().includes(term) ||
+        p.category.toLowerCase().includes(term) ||
+        p.subcategory.toLowerCase().includes(term)
+      );
     }
 
-    // --- INICIALIZACIÓN ---
-    function initialize() {
-        // Mostrar estado de carga inicialmente
-        loadingState.classList.remove('d-none');
-        productsGrid.classList.add('d-none');
-        emptyState.classList.add('d-none');
-
-        // Simular una pequeña demora para la carga de datos (opcional)
-        setTimeout(() => {
-            renderProducts(allProducts);
-        }, 250); // 250ms de retraso
+    // b) categorías
+    const checkedCats = Array.from(
+      document.querySelectorAll('.category-checkbox:checked')
+    ).map(cb => cb.value);
+    if (checkedCats.length) {
+      filtered = filtered.filter(p =>
+        checkedCats.includes(p.category)
+      );
     }
 
-    initialize();
+    // c) rango de precio
+    const min = parseFloat(minPriceInput.value);
+    if (!isNaN(min)) filtered = filtered.filter(p => p.price >= min);
+    const max = parseFloat(maxPriceInput.value);
+    if (!isNaN(max)) filtered = filtered.filter(p => p.price <= max);
+
+    // d) orden
+    switch (sortBySelect.value) {
+      case 'sku-asc':
+        filtered.sort((a,b) => a.sku.localeCompare(b.sku));
+        break;
+      case 'sku-desc':
+        filtered.sort((a,b) => b.sku.localeCompare(a.sku));
+        break;
+      case 'price-asc':
+        filtered.sort((a,b) => (a.price||0) - (b.price||0));
+        break;
+      case 'price-desc':
+        filtered.sort((a,b) => (b.price||0) - (a.price||0));
+        break;
+    }
+
+    renderProducts(filtered);
+  }
+
+  // 8) Listeners
+  searchInput.addEventListener('input',   applyFiltersAndSort);
+  clearSearchBtn.addEventListener('click', () => {
+    searchInput.value = '';
+    applyFiltersAndSort();
+  });
+
+  document.querySelectorAll('.category-checkbox')
+    .forEach(cb => cb.addEventListener('change', applyFiltersAndSort));
+
+  minPriceInput.addEventListener('input', applyFiltersAndSort);
+  maxPriceInput.addEventListener('input', applyFiltersAndSort);
+  sortBySelect.addEventListener('change',  applyFiltersAndSort);
+
+  clearCategoriesBtn.addEventListener('click', () => {
+    document.querySelectorAll('.category-checkbox')
+      .forEach(cb => cb.checked = false);
+    applyFiltersAndSort();
+  });
+
+  clearAllFiltersBtn.addEventListener('click', () => {
+    // limpia TODO
+    searchInput.value = '';
+    minPriceInput.value = '';
+    maxPriceInput.value = '';
+    sortBySelect.value = 'sku-asc';
+    document.querySelectorAll('.category-checkbox')
+      .forEach(cb => cb.checked = false);
+    applyFiltersAndSort();
+  });
+
+  // 9) Inicializar
+  renderProducts(allProducts);
 });

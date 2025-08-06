@@ -344,64 +344,62 @@ h2 {
 /* ============================
   Footer
   ============================ */
-.footer-heemsa {
-    background-color: var(--color-primary) !important;
-    color: var(--color-white) !important;
-    padding: 50px 0;
-    margin-top: auto;
-    width: 100%;
-    flex-shrink: 0;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    align-items: center;
+  .footer-heemsa {
+  background-color: var(--color-primary);
+  color: #fff;
+  padding: 3rem 1rem;
 }
-
 .footer-heemsa .footer-section {
-    flex: 1;
-    min-width: 200px;
-    margin: 0 var(--spacing-lg);
+  flex: 1;
+  min-width: 200px;
+  margin-bottom: 1.5rem;
 }
-
-.footer-heemsa .footer-section h4 {
-    font-size: var(--font-size-xl);
-    color: var(--color-white);
-    margin-bottom: var(--spacing-md);
+.footer-heemsa h4 {
+  font-size: 1.125rem;
+  margin-bottom: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
 }
-
-.footer-heemsa .footer-section p,
-.footer-heemsa .footer-section a {
-    color: var(--color-white) !important;
-    font-size: var(--font-size-base);
-    margin-bottom: var(--spacing-sm);
-    text-decoration: none;
+.footer-heemsa ul {
+  padding: 0;
+  list-style: none;
 }
-
-.footer-heemsa .footer-section a:hover {
-    color: var(--color-white) !important;
-    opacity: 0.8;
+.footer-heemsa ul li {
+  margin-bottom: 0.5rem;
 }
-
-.footer-heemsa .social-icons {
-    display: flex;
-    gap: var(--spacing-md);
-    margin-top: var(--spacing-lg);
-    justify-content: center;
+.footer-heemsa a {
+  color: #fff;
+  text-decoration: none;
+  transition: opacity .2s;
 }
-
-.footer-heemsa .social-icons a {
-    display: inline-block;
+.footer-heemsa a:hover {
+  opacity: .8;
 }
-
 .footer-heemsa .social-icons img {
-    width: 40px;
-    height: 40px;
-    display: block;
-    transition: transform var(--transition-fast);
+  width: 32px;
+  height: 32px;
+  margin-right: 0.5rem;
+  transition: transform .2s;
+}
+.footer-heemsa .social-icons img:hover {
+  transform: scale(1.1);
 }
 
-.footer-heemsa .social-icons img:hover {
-    transform: scale(1.1);
+.footer-heemsa .container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+}
+.footer-heemsa .footer-section {
+  flex: 1 1 200px;
+}
+@media (max-width: 576px) {
+  .footer-heemsa .footer-section {
+    text-align: center;
+  }
+  .footer-heemsa .social-icons {
+    justify-content: center !important;
+  }
 }
 
 /* ============================
@@ -540,7 +538,7 @@ p {
 /* ============================
   Productos
   ============================ */
-.product-card {
+/* .product-card {
     background: var(--color-white);
     border-radius: var(--border-radius-sm);
     padding: var(--spacing-lg);
@@ -568,8 +566,8 @@ p {
 }
 
 .modal {
-    z-index: 9999; /* Confirmar que el modal esté por encima del nav */
-}
+    z-index: 9999; 
+} */
 
 
 .container h1 {
@@ -802,4 +800,56 @@ textarea:focus {
 
 .checkbox-container a:hover {
   text-decoration: none;
+}
+
+/* style.css */
+
+/* 1) Contenedor flex principal */
+.contact-container {
+  display: flex;
+  flex-wrap: wrap;    /* para apilar en móvil */
+  gap: 2rem;
+}
+
+/* 2) Columnas: cada una al 100% en móvil, ~50% en desktop */
+.contact-form,
+.contact-info-map {
+  flex: 1 1 100%;
+}
+@media (min-width: 768px) {
+  .contact-form,
+  .contact-info-map {
+    flex: 1 1 calc(50% - 1rem);
+  }
+}
+
+/* 3) Tarjetas con sombra y padding */
+.contact-form,
+.info-card,
+.map-card {
+  background: #fff;
+  padding: 1.5rem;
+  border-radius: 0.5rem;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+}
+
+/* 4) Info+mapa en flex-columna */
+.contact-info-map {
+  display: flex;
+  flex-direction: column;
+}
+.info-card {
+  margin-bottom: 1.5rem;
+}
+
+/* 5) Mapa ocupa el resto del alto */
+.map-card {
+  flex: 1;
+  min-height: 200px;
+  overflow: hidden;
+}
+.map-card iframe {
+  width: 100%;
+  height: 100%;
+  border: none;
 }

@@ -907,3 +907,91 @@ body {
     margin-top: 0.5rem;
 }
 
+/* tools.css */
+
+/* Contenedor fijo para la imagen */
+.product-image-container {
+  height: 180px;              /* fuerza una altura fija */
+  display: flex;
+  align-items: center;        /* centra verticalmente */
+  justify-content: center;    /* centra horizontalmente */
+  overflow: hidden;
+}
+
+/* Imagen responsiva dentro del contenedor */
+.product-image {
+  max-height: 100%;           /* nunca supera la altura del contenedor */
+  width: auto;                /* mantiene proporción */
+  object-fit: contain;        /* se escala sin recortarse */
+}
+
+/* ------------------------------------------------- */
+/* AJUSTES FINALES PARA EL MODAL DE PRODUCTO         */
+/* ------------------------------------------------- */
+
+/* Asegura que el modal use flex y no grid override */
+#productModal.modal.show .modal-body {
+  display: flex !important;
+  flex-wrap: nowrap !important;
+  gap: 1.5rem !important;
+  padding: 1.5rem !important;
+  max-height: 75vh !important;
+  overflow-y: auto !important;
+}
+
+/* Desktop: imagen ~40% del ancho, info ~60% */
+#productModal .detail-image-wrapper {
+  flex: 0 0 40% !important;
+  max-width: 40% !important;
+}
+#productModal .detail-info {
+  flex: 1 1 60% !important;
+  max-width: 60% !important;
+  display: flex !important;
+  flex-direction: column !important;
+}
+
+/* Aumenta un poco la imagen */
+#productModal .product-detail-image {
+  width: 100% !important;
+  height: auto !important;
+  object-fit: contain !important;
+  max-height: 400px !important;
+  border-radius: 0.5rem !important;
+}
+
+/* Descripción con scroll interno y más altura */
+#productModal .product-detail-desc {
+  flex: 1 !important;
+  max-height: 200px !important;
+  overflow-y: auto !important;
+  margin-bottom: 1rem !important;
+  padding-right: 0.5rem !important;
+  line-height: 1.5 !important;
+}
+
+/* Mantén el botón siempre abajo */
+#productModal .btn-cotizar {
+  margin-top: auto !important;
+}
+
+/* ------------------------------------------------- */
+/* Responsive: apila imagen + info en móvil/tablet   */
+/* ------------------------------------------------- */
+@media (max-width: 768px) {
+  #productModal.modal.show .modal-dialog {
+    max-width: 95% !important;
+  }
+  #productModal.modal.show .modal-body {
+    flex-direction: column !important;
+  }
+  #productModal .detail-image-wrapper,
+  #productModal .detail-info {
+    flex: 0 0 100% !important;
+    max-width: 100% !important;
+  }
+  /* Ajusta la imagen para móvil */
+  #productModal .product-detail-image {
+    max-height: 250px !important;
+  }
+}
