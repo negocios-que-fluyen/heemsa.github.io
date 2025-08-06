@@ -1,0 +1,245 @@
+/* ============================
+  Navegación Principal - Solo sidebar móvil simplificado
+  ============================ */
+
+/* Eliminar scroll horizontal */
+html, body {
+    overflow-x: hidden;
+}
+
+/* ============================
+  MOBILE SIDEBAR - Simplificado
+  ============================ */
+.mobile-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    z-index: 1040;
+}
+
+.mobile-overlay.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.mobile-sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 280px;
+    height: 100%;
+    background: white;
+    box-shadow: 10px 0 30px rgba(0, 0, 0, 0.2);
+    transform: translateX(-100%);
+    transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    z-index: 1041;
+    overflow-y: auto;
+}
+
+.mobile-sidebar.active {
+    transform: translateX(0);
+}
+
+.sidebar-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px;
+    background: var(--color-primary);
+    color: white;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.sidebar-logo {
+    height: 40px;
+    width: auto;
+}
+
+.close-sidebar {
+    background: rgba(255, 255, 255, 0.2);
+    border: none;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 18px;
+}
+
+.close-sidebar:hover {
+    background: rgba(255, 255, 255, 0.3);
+    transform: scale(1.1) rotate(90deg);
+}
+
+.sidebar-nav {
+    padding: 0;
+}
+
+.sidebar-item {
+    border-bottom: 1px solid #f0f0f0;
+    opacity: 0;
+    transform: translateX(-30px);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.sidebar-item.animate-in {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+.sidebar-link {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 18px 20px;
+    color: #333;
+    text-decoration: none;
+    font-size: 1rem;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    background: none;
+    border: none;
+    width: 100%;
+    text-align: left;
+    cursor: pointer;
+}
+
+.sidebar-link:hover {
+    background: linear-gradient(90deg, rgba(255, 58, 23, 0.05) 0%, transparent 100%);
+    color: var(--color-primary);
+    padding-left: 25px;
+    text-decoration: none;
+}
+
+/* Iconos reales usando Font Awesome o Bootstrap Icons */
+.sidebar-link i {
+    font-size: 1.2rem;
+    opacity: 0.7;
+    min-width: 20px;
+    text-align: center;
+}
+
+/* Botón de promociones especial - llamativo pero sin causar scroll */
+.promo-item {
+    margin: 10px 15px;
+    border-radius: 12px;
+    background: linear-gradient(135deg, #ff6b35 0%, #ff4500 100%);
+    box-shadow: 0 4px 15px rgba(255, 107, 53, 0.3);
+    border: none !important;
+    overflow: hidden;
+    position: relative;
+}
+
+.promo-item::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+    transition: left 0.5s;
+}
+
+.promo-item:hover::before {
+    left: 100%;
+}
+
+.promo-link {
+    color: white !important;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    padding: 15px 20px !important;
+    background: none !important;
+    position: relative;
+    z-index: 1;
+}
+
+.promo-link:hover {
+    color: white !important;
+    padding-left: 20px !important;
+    transform: translateY(-1px);
+    background: none !important;
+}
+
+.promo-link i {
+    opacity: 1;
+    font-size: 1.3rem;
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+    100% { transform: scale(1); }
+}
+
+/* ============================
+  RESPONSIVE ADJUSTMENTS
+  ============================ */
+
+/* Ocultar sidebar en desktop */
+@media (min-width: 992px) {
+    .mobile-sidebar,
+    .mobile-overlay {
+        display: none;
+    }
+}
+
+/* Mobile optimizations */
+@media (max-width: 480px) {
+    .mobile-sidebar {
+        width: 260px;
+    }
+}
+
+/* ============================
+  ANIMACIONES ESPECIALES
+  ============================ */
+
+/* Bounce para íconos */
+@keyframes iconBounce {
+    0%, 20%, 50%, 80%, 100% {
+        transform: translateY(0);
+    }
+    40% {
+        transform: translateY(-3px);
+    }
+    60% {
+        transform: translateY(-1px);
+    }
+}
+
+.sidebar-link:hover i {
+    animation: iconBounce 0.6s ease;
+}
+
+/* Pulse para botón de cierre */
+@keyframes pulse {
+    0% {
+        box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.7);
+    }
+    70% {
+        box-shadow: 0 0 0 10px rgba(255, 255, 255, 0);
+    }
+    100% {
+        box-shadow: 0 0 0 0 rgba(255, 255, 255, 0);
+    }
+}
+
+.close-sidebar:hover {
+    animation: pulse 1.5s infinite;
+}

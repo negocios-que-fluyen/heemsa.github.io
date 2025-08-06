@@ -1,0 +1,197 @@
+---
+layout: base.njk
+title: "herramientas"
+---
+
+<!-- CSS específico para herramientas -->
+<link rel="stylesheet" href="/css/tools.css">
+
+<!-- Control Bar -->
+<div class="catalog-controls">
+    <div class="container">
+        <div class="row g-2 align-items-center">
+            <!-- Columna 1: Búsqueda -->
+            <div class="col-md-5">
+                <div class="search-container">
+                    <label class="form-label fw-semibold mb-1" style="font-size: 0.85rem;">
+                        <i class="fas fa-search me-1"></i>Buscar productos
+                    </label>
+                    <div class="input-group">
+                        <span class="input-group-text">
+                            <i class="fas fa-search"></i>
+                        </span>
+                        <input type="text" 
+                               class="form-control" 
+                               id="searchInput" 
+                               placeholder="Buscar..."
+                               aria-label="Buscar productos">
+                        <button class="btn btn-outline-secondary" type="button" id="clearSearch">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Columna 2: Filtro de Precio -->
+            <div class="col-md-3">
+                <div class="price-filter">
+                    <label class="form-label fw-semibold mb-1" style="font-size: 0.85rem;">
+                        <i class="fas fa-dollar-sign me-1"></i>Rango de Precio
+                    </label>
+                    <div class="row g-1">
+                        <div class="col-6">
+                            <input type="number" 
+                                   class="form-control" 
+                                   id="minPrice" 
+                                   placeholder="Min"
+                                   min="0"
+                                   aria-label="Precio mínimo">
+                        </div>
+                        <div class="col-6">
+                            <input type="number" 
+                                   class="form-control" 
+                                   id="maxPrice" 
+                                   placeholder="Max"
+                                   min="0"
+                                   aria-label="Precio máximo">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Columna 3: Ordenamiento -->
+            <div class="col-md-4">
+                <div class="sort-container">
+                    <label for="sortBy" class="form-label fw-semibold mb-1" style="font-size: 0.85rem;">
+                        <i class="fas fa-sort me-1"></i>Ordenar por
+                    </label>
+                    <select class="form-select" id="sortBy" aria-label="Ordenar productos">
+                        <option value="name-asc">Nombre A-Z</option>
+                        <option value="name-desc">Nombre Z-A</option>
+                        <option value="price-asc">Precio: Menor a Mayor</option>
+                        <option value="price-desc">Precio: Mayor a Menor</option>
+                        <option value="newest">Más Recientes</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Results Info -->
+        <div class="results-info mt-2 d-flex justify-content-between align-items-center"> <!-- Cambio: mt-3 a mt-2 -->
+            <span class="text-muted" id="productCount">
+                <i class="fas fa-layer-group me-1"></i>
+                Mostrando <span class="fw-semibold">0</span> productos
+            </span>
+            <button class="btn btn-sm btn-outline-secondary" id="clearAllFilters">
+                <i class="fas fa-eraser me-1"></i>Limpiar filtros
+            </button>
+        </div>
+    </div>
+</div>
+
+<div class="catalog-page">
+    <div class="container-fluid">
+        <div class="row">
+            <!-- Sidebar con filtros -->
+            <aside class="col-lg-3">
+                <div class="filters-sidebar">
+                    <div class="sidebar-header">
+                        <h3 class="sidebar-title">
+                            <i class="fas fa-filter me-2"></i>Filtros
+                        </h3>
+                        <button class="btn btn-sm btn-link text-decoration-none p-0" id="resetFilters">
+                            Restablecer
+                        </button>
+                    </div>
+                    
+                    <!-- Categorías (se carga dinámicamente) -->
+                    <div class="filter-section">
+                        <h4 class="filter-title" data-bs-toggle="collapse" data-bs-target="#categoriesFilter" aria-expanded="true">
+                            <i class="fas fa-tags me-2"></i>Categorías
+                            <i class="fas fa-chevron-down ms-auto"></i>
+                        </h4>
+                        <div class="collapse show" id="categoriesFilter">
+                            <div class="filter-content" id="categoriesContent">
+                                <!-- Se llena dinámicamente con JavaScript -->
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Marcas -->
+                    <div class="filter-section">
+                        <h4 class="filter-title" data-bs-toggle="collapse" data-bs-target="#brandsFilter" aria-expanded="false">
+                            <i class="fas fa-copyright me-2"></i>Marcas
+                            <i class="fas fa-chevron-down ms-auto"></i>
+                        </h4>
+                        <div class="collapse" id="brandsFilter">
+                            <div class="filter-content" id="brandsList">
+                                <!-- Se llena dinámicamente con JavaScript -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </aside>
+
+            <!-- Zona de productos -->
+            <main class="col-lg-9">
+                <div class="products-container">
+                    <!-- Loading State -->
+                    <div class="loading-state d-none text-center py-5">
+                        <div class="spinner-border text-primary" role="status">
+                            <span class="visually-hidden">Cargando...</span>
+                        </div>
+                        <p class="mt-2 text-muted">Cargando productos...</p>
+                    </div>
+                    
+                    <!-- Empty State -->
+                    <div class="empty-state d-none text-center py-5">
+                        <i class="fas fa-search fa-3x text-muted mb-3"></i>
+                        <h4 class="text-muted">No se encontraron productos</h4>
+                        <p class="text-muted">Intenta ajustar los filtros o cambiar los términos de búsqueda</p>
+                        <button class="btn btn-primary" id="clearAllFiltersEmpty">
+                            <i class="fas fa-eraser me-1"></i>Limpiar todos los filtros
+                        </button>
+                    </div>
+                    
+                    <!-- Products Grid (se carga dinámicamente) -->
+                    <div class="products-grid" id="productsGrid">
+                        <div id="productsContainer">
+                            <!-- Los productos se cargan aquí dinámicamente -->
+                        </div>
+                    </div>
+                    
+                    <!-- Pagination -->
+                    <nav aria-label="Navegación de productos" class="mt-4">
+                        <ul class="pagination justify-content-center" id="productsPagination">
+                            <!-- Se genera dinámicamente con JavaScript -->
+                        </ul>
+                    </nav>
+                </div>
+            </main>
+        </div>
+    </div>
+</div>
+
+<!-- Modal de detalles del producto -->
+<div class="modal fade" id="productModal" tabindex="-1" aria-labelledby="productModalLabel">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="productModalLabel">Detalles del Producto</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+            </div>
+            <div class="modal-body" id="productModalBody">
+                <!-- Contenido se llena dinámicamente -->
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Pasar datos JSON al JavaScript -->
+<script>
+    window.TOOLS_DATA = {{ tools | dump | safe }};
+</script>
+
+<!-- Scripts -->
+<script src="/js/catalog-manager.js"></script>
+<script src="/js/product-modal.js"></script>

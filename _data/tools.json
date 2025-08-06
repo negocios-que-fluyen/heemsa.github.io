@@ -1,0 +1,152 @@
+{
+    "sections": [
+        {
+            "category": "Almacenamiento de herramientas",
+            "tools": [
+                {
+                    "subcategory": "Bolsas de herramientas",
+                    "products": [
+                        {
+                            "description": "Bolso BPTOTE (Blue-Point®)",
+                            "name": "BPTOTE",
+                            "image": "images/tools/BPTOTE-3.jpg",
+                            "price": 59.74,
+                            "url": "https://snapon.com.mx/wp-content/uploads/2021/02/BPTOTE-3.jpg.webp"
+                        },
+                        {
+                            "description": "Bolso para herramientas de potencia",
+                            "name": "CTTOTEA",
+                            "image": "images/tools/CTTOTE-1.jpg",
+                            "price": 90.94,
+                            "url": "https://snapon.com.mx/wp-content/uploads/2021/02/CTTOTE-1.jpg.webp"
+                        },
+                        {
+                            "description": "Bolsa portátil con compartimiento plástico",
+                            "name": "TB20A",
+                            "image": "images/tools/TB20-1.jpg",
+                            "price": 96.86,
+                            "url": "https://snapon.com.mx/wp-content/uploads/2021/02/TB20-1.jpg.webp"
+                        },
+                        {
+                            "description": "Bolsa portátil 17X9X11",
+                            "name": "TB40",
+                            "image": "images/tools/TB40-1.jpg",
+                            "price": 79.46,
+                            "url": "https://snapon.com.mx/wp-content/uploads/2021/02/TB40-1.jpg.webp"
+                        }
+                    ]
+                },
+                {
+                    "subcategory": "Cajas de plastico",
+                    "products": [
+                        {
+                            "description": "Caja de Plástico o Con Bandeja Portatil (20 1/4″ x 9″ x 7 3/4″) Caja plástica 20 1/4″ x 9 x 7 3/4″",
+                            "name": "YA483",
+                            "image": "images/tools/YA483-1.jpg",
+                            "price": 108.19,
+                            "url": "https://snapon.com.mx/wp-content/uploads/2021/02/YA483-1.jpg.webp"
+                        },
+                        {
+                            "description": "Caja de Plastico o Parts Storage 8 a 32 Compartimentos (18″ x 12″ x 3″) Similar a YA402 excepto que las separaciones intercambiables pueden formar de 8 a 32 compartimientos. 18″ x 12″ x 3″",
+                            "name": "YA485",
+                            "image": "images/tools/YA485-1.jpg",
+                            "price": 131.30
+                        }
+                    ]
+                }
+            ],
+            "currency": "MXN"
+        },
+        {
+            "category": "Diagnóstico",
+            "currency": "USD",
+            "tools": [
+                {
+                    "subcategory": "Camara Termográfica",
+                    "products": [
+                        {
+                            "description": "Cámara Termográfica\n\nUtiliza tecnología de imagen infrarroja para revelar fuentes de calor producidas por fricción, resistencia eléctrica, cambios de presión y más\n\n• Vea detalles precisos utilizando las imágenes producidas con 4,800 zonas de temperatura\n\n• Muestra temperaturas extremas, desde -4–840 °F (-20–450 °C)",
+                            "name": "EETH300",
+                            "image": "images/tools/EETH300_screen_Menu.jpg",
+                            "price": 3999.00,
+                            "url": "https://snapon.com.mx/wp-content/uploads/2021/10/EETH300_screen_Menu.jpg.webp"
+                        }
+                    ]
+                },
+                {
+                    "subcategory": "NEXIQ",
+                    "products": [
+                    ]
+                }
+            ]
+        },
+        {
+            "category": "Torque",
+            "currency": "USD",
+            "tools": []
+        },
+        {
+            "category": "Equipo de protección personal",
+            "currency": "USD",
+            "tools": []
+        },
+        {
+            "category": "Equipo de Taller",
+            "currency": "USD",
+            "tools": []
+        },
+        {
+            "category": "Herramienta inalámbrica",
+            "currency": "USD",
+            "tools": []
+        },
+        {
+            "category": "Herramienta manual",
+            "currency": "USD",
+            "tools": []
+        },
+        {
+            "category": "Herramienta neumática",
+            "currency": "USD",
+            "tools": []
+        },
+        {
+            "category": "Herramienta de potencia",
+            "currency": "USD",
+            "products": [
+                {
+                    "name": "GA236C",
+                    "description": "Grabadora Eléctrica (Blue-Point®)",
+                    "image": "images/tools/GA236C-1.jpg",
+                    "price": 109.33,
+                    "url": "https://snapon.com.mx/wp-content/uploads/2021/02/GA236C-1.jpg.webp"
+                }
+            ]
+        },
+        {
+            "category": "Iluminación",
+            "currency": "USD",
+            "products": []
+        },
+        {
+            "category": "Medición",
+            "currency": "USD",
+            "tools": []
+        },
+        {
+            "category": "Miscelaneos",
+            "currency": "USD",
+            "tools": []
+        },
+        {
+            "category": "Remoción de materiales",
+            "currency": "USD",
+            "tools": []
+        },
+        {
+            "category": "Soldadura",
+            "currency": "USD",
+            "tools": []
+        }
+    ]
+}

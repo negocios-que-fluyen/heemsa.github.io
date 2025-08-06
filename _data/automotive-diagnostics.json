@@ -1,0 +1,23 @@
+[
+    {
+        "img": "/images/automotive-diagnostics/Snap-onETHOSEdge01.jpg",
+        "title": "ETHOS Edge",
+        "description": "<div style='font-family: Arial, sans-serif; color: #333;'><p><strong>Escáner de diagnóstico electrónico</strong></p><p>Ethos Edge con cobertura en 47 marcas</p><p>Equipo autorizado por AutoAuth para diagnóstico vehículos FCA (requiere licencia)</p><p>Se comunica con PC, a través de un software (Shop Stream Connect), incluido.</p></div>"
+    },
+    {
+        "description": "<div style='font-family: Arial, sans-serif; color: #333;'><p><strong>Escáner de diagnóstico electrónico</strong></p><p>Ethos Edge con cobertura en 47 marcas</p><p>Equipo autorizado por AutoAuth para diagnóstico vehículos FCA (requiere licencia)</p><p>Se comunica con PC, a través de un software (Shop Stream Connect), incluido.</p></div>",
+        "img": "/images/automotive-diagnostics/Snap-onETHOSEdge01.jpg",
+        "title": "ETHOS Pro"
+    }, {
+        "description": {
+            "title": "ETHOS Pro",
+            "paragraphs": [
+                "Ethos Edge con cobertura en 47 marcas",
+                "Equipo autorizado por AutoAuth para diagnóstico vehículos FCA (requiere licencia)",
+                "Se comunica con PC, a través de un software (Shop Stream Connect), incluido."
+            ]
+        },
+        "img": "/images/automotive-diagnostics/Snap-onETHOSEdge01.jpg",
+        "title": "ETHOS Pro"
+    }
+]

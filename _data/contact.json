@@ -1,0 +1,15 @@
+{
+    "telefonos": ["351-517-6946"],
+    "whatsapp": ["351-111-1257"],
+    "email": "contacto@heemsa.com",
+    "direccion": "Calle San Francisco Pte 8 Madero",
+    "ciudad": "Zamora",
+    "estado": "Michoacán",
+    "cp": "59610",
+    "aviso_privacidad": "data/avisoprivacidad.pdf",
+    "redes": {
+        "facebook": "https://www.facebook.com/heemsa",
+        "instagram": "https://www.instagram.com/heemsa",
+        "twitter": "https://www.twitter.com/heemsa"
+    }
+}
