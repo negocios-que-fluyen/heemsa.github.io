@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nuestros Productos</title>
+    <meta name="description" content="Líderes en la venta de herramientas automotrices de alta calidad.">
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/main-navigation.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="page-container">
+        <header class="main-header">
+    <nav class="navbar navbar-expand-lg navbar-custom">
+        <div class="container">
+            <a class="navbar-brand" href="/">
+                <img src="/assets/images/logo-heemsa.png" alt="HEEMSA" class="logo">
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="/">INICIO</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/herramientas/">HERRAMIENTAS</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/productos/">DIAGNÓSTICO AUTOMOTRIZ</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/contacto/">CONTACTO</a></li>
+                    <li class="nav-item nav-item-promo"><a class="nav-link" href="/assets/Revista de Promociones Snap-on.pdf" target="_blank">PROMOCIONES</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+</header>
+
+<!-- MOBILE SIDEBAR SIMPLIFICADO -->
+<div class="mobile-overlay"></div>
+<div class="mobile-sidebar">
+    <div class="sidebar-header">
+        <img src="/assets/images/logo-heemsa-menu_hamburguesa.png" alt="Heemsa" class="sidebar-logo">
+        <button class="close-sidebar">
+            ×
+        </button>
+    </div>
+    
+    <nav class="sidebar-nav">
+        <div class="sidebar-item">
+            <a href="/" class="sidebar-link">
+                <i class="fas fa-home"></i>
+                Inicio
+            </a>
+        </div>
+        
+        <div class="sidebar-item">
+            <a href="/herramientas/" class="sidebar-link">
+                <i class="fas fa-tools"></i>
+                Herramientas
+            </a>
+        </div>
+        
+        <div class="sidebar-item">
+            <a href="/productos/" class="sidebar-link">
+                <i class="fas fa-search"></i>
+                Diagnóstico Automotriz
+            </a>
+        </div>
+        
+        <div class="sidebar-item">
+            <a href="/contacto/" class="sidebar-link">
+                <i class="fas fa-envelope"></i>
+                Contacto
+            </a>
+        </div>
+        
+        <div class="sidebar-item promo-item">
+            <a href="/assets/Revista de Promociones Snap-on.pdf" target="_blank" class="sidebar-link promo-link">
+                <i class="fas fa-gift"></i>
+                Promociones
+            </a>
+        </div>
+    </nav>
+</div>
+
+
+        <main class="content-wrap container mt-4">
+            <h2>Catálogo de Productos</h2>
+<p>Explore nuestra amplia gama de herramientas automotrices.</p>
+<!-- Aquí se listarían los productos dinámicamente en el futuro -->
+
+        </main>
+
+        <footer class="footer-heemsa">
+  <div class="container d-flex flex-wrap justify-content-between align-items-start">
+
+    <!-- 1. Branding / Descripción -->
+    <div class="footer-section">
+      <img src="/assets/logo-heemsa.png" alt="HEEMSA" style="max-width:120px; margin-bottom:1rem;">
+      <p>HEEMSA © 2025. Todos los derechos reservados.</p>
+      <p>Especialistas en herramientas automotrices de alta calidad.</p>
+    </div>
+
+    <!-- 2. Enlaces Rápidos -->
+    <div class="footer-section">
+      <h4>Enlaces</h4>
+      <ul class="list-unstyled">
+        <li><a href="/">Inicio</a></li>
+        <li><a href="/herramientas/">Herramientas</a></li>
+        <li><a href="/diagnostico/">Diagnóstico</a></li>
+        <li><a href="/contacto/">Contacto</a></li>
+        <li><a href="/promociones/">Promociones</a></li>
+      </ul>
+    </div>
+
+    <!-- 3. Contacto & Redes -->
+    <div class="footer-section">
+      <h4>Contáctanos</h4>
+      <p>Tel: <a href="tel:+3515176946">351-517-6946</a></p>
+      <p>Email: <a href="mailto:contacto@heemsa.com">contacto@heemsa.com</a></p>
+      <p><a href="/aviso-privacidad/">Aviso de Privacidad</a></p>
+      <div class="social-icons mt-3">
+        <a href="https://www.facebook.com" target="_blank"><img src="/assets/icons/facebook.png" alt="Facebook"></a>
+        <a href="https://www.twitter.com"  target="_blank"><img src="/assets/icons/x.png"        alt="Twitter"></a>
+      </div>
+    </div>
+
+  </div>
+</footer>
+    </div>
+
+    <script src="/js/bootstrap.bundle.min.js"></script>
+    <script src="/js/main-navigation.js"></script>
+    <script>
+        let lastScrollTop = 0;
+        const header = document.querySelector('.main-header');
+        window.addEventListener('scroll', function() {
+            let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+            if (scrollTop > lastScrollTop) {
+                // Downscroll
+                header.classList.add('header-hidden');
+            } else {
+                // Upscroll
+                header.classList.remove('header-hidden');
+            }
+            lastScrollTop = scrollTop <= 0 ? 0 : scrollTop;
+        }, false);
+    </script>
+</body>
+</html>
