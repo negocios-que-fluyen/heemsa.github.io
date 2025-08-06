@@ -1,0 +1,42 @@
+name: Build and Deploy Eleventy to GitHub Pages
+
+on:
+  push:
+    branches: [desarrollo]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1️⃣ Clona la rama desarrollo
+      - uses: actions/checkout@v3
+
+      # 2️⃣ Configura Node.js
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+          cache: 'npm'
+
+      # 3️⃣ Instala dependencias
+      - name: Install dependencies
+        run: npm ci
+
+      # 4️⃣ Compila el sitio
+      - name: Build Eleventy site
+        run: npm run build
+
+      # 5️⃣ Publica en la rama MAIN
+      - name: Deploy to main branch
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_branch: main
+          publish_dir: ./_site
+          keep_files: false
+          force_orphan: true
